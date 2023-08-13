@@ -13,6 +13,13 @@ public class CryptexScript : MonoBehaviour
     public bool complete1;
     public bool complete2;
 
+    public List<GameObject> symbolListRow1;
+    public List<GameObject> symbolListRow2;
+    public List<GameObject> symbolListRow3;
+    public List<GameObject> symbolListRow4;
+    public List<GameObject> symbolListRow5;
+    public List<int> symbolRowIndex;
+
     public void start1()
     {
         if (!complete1)
@@ -46,5 +53,58 @@ public class CryptexScript : MonoBehaviour
         complete2 = true;
         videoPlay.knowsCode[3] = true;
         environment.SetActive(true);
+    }
+
+
+
+    public void scrollUp(int row)
+    {
+        if (symbolRowIndex[row] < 4)
+        {
+            symbolRowIndex[row]++;
+        }
+        updateCryptex();
+    }
+
+    public void scrollDown(int row)
+    {
+        if (symbolRowIndex[row] != 0)
+        {
+            symbolRowIndex[row]--;
+        }
+        updateCryptex();
+    }
+
+    public void updateCryptex()
+    {
+        foreach(GameObject g in symbolListRow1)
+        {
+            g.SetActive(false);
+        }
+        symbolListRow1[symbolRowIndex[0]].SetActive(true);
+
+        foreach (GameObject g in symbolListRow2)
+        {
+            g.SetActive(false);
+        }
+        symbolListRow2[symbolRowIndex[1]].SetActive(true);
+
+        foreach (GameObject g in symbolListRow3)
+        {
+            g.SetActive(false);
+        }
+        symbolListRow3[symbolRowIndex[2]].SetActive(true);
+
+        foreach (GameObject g in symbolListRow4)
+        {
+            g.SetActive(false);
+        }
+        symbolListRow4[symbolRowIndex[3]].SetActive(true);
+
+        foreach (GameObject g in symbolListRow5)
+        {
+            g.SetActive(false);
+        }
+        symbolListRow5[symbolRowIndex[4]].SetActive(true);
     }
 }

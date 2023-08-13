@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BedManager : MonoBehaviour
 {
@@ -15,6 +16,11 @@ public class BedManager : MonoBehaviour
 
     public GameObject choiceScreen;
     public GameObject environment;
+    public AudioSource leave;
+    public AudioSource die;
+    public GameObject blackScreen;
+
+    private int chosenFate;
 
     public void checkIfAllowedBed()
     {
@@ -53,7 +59,7 @@ public class BedManager : MonoBehaviour
         environment.SetActive(true);
     }
 
-    public void choose()
+    public void choose(int fate)
     {
         closeBed();
         switch (bedstate)
@@ -69,9 +75,48 @@ public class BedManager : MonoBehaviour
                 bedstate++;
                 break;
             case 2:
-                Debug.Log("Finished game");
+                finishGame(fate);
                 break;
         }
+    }
+
+    public void finishGame(int fate)
+    {
+        switch(fate)
+        {
+            case 0: //worthy
+                StartCoroutine(worty());
+                break;
+            case 1: //unsure
+                StartCoroutine(unsure());
+                break;
+            case 2: //unworthy
+                StartCoroutine(unworty());
+                break;
+        }
+    }
+
+    public IEnumerator worty()
+    {
+        blackScreen.SetActive(true);
+        leave.Play();
+        yield return new WaitForSecondsRealtime(2f);
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public IEnumerator unsure()
+    {
+        SceneManager.LoadScene("SampleScene");
+        yield return new WaitForSecondsRealtime(6f);
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public IEnumerator unworty()
+    {
+        blackScreen.SetActive(true);
+        die.Play();
+        yield return new WaitForSecondsRealtime(2f);
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void notAllowedBed()
