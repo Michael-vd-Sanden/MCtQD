@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CryptexScript : MonoBehaviour
 {
     public GameObject environment;
+    public GameObject wholeGame;
     public VideoPlay videoPlay;
     public AreaInhibiter areaInhibiter;
     public GameObject cryptex1;
     public GameObject cryptex2;
+    public int activeGame;
 
     public bool complete1;
     public bool complete2;
@@ -20,12 +23,21 @@ public class CryptexScript : MonoBehaviour
     public List<GameObject> symbolListRow5;
     public List<int> symbolRowIndex;
 
+    public List<Image> codeList1;
+    public List<Image> codeList2;
+
+    public List<GameObject> buttons1;
+    public List<GameObject> buttons2; 
+
+    private string answer;
+
     public void start1()
     {
         if (!complete1)
         { 
             cryptex1.SetActive(true);
             environment.SetActive(false);
+            wholeGame.SetActive(true);
         }
     }
 
@@ -36,6 +48,8 @@ public class CryptexScript : MonoBehaviour
         areaInhibiter.areaIndex++;
         videoPlay.knowsCode[1] = true;
         environment.SetActive(true);
+        wholeGame.SetActive(false);
+        Debug.Log("win1");
     }
 
     public void start2()
@@ -44,6 +58,7 @@ public class CryptexScript : MonoBehaviour
         {
             cryptex2.SetActive(true);
             environment.SetActive(false);
+            wholeGame.SetActive(true);
         }
     }
 
@@ -53,6 +68,7 @@ public class CryptexScript : MonoBehaviour
         complete2 = true;
         videoPlay.knowsCode[3] = true;
         environment.SetActive(true);
+        wholeGame.SetActive(false);
     }
 
 
@@ -64,6 +80,7 @@ public class CryptexScript : MonoBehaviour
             symbolRowIndex[row]++;
         }
         updateCryptex();
+        checkIfCorrect(row);
     }
 
     public void scrollDown(int row)
@@ -73,6 +90,77 @@ public class CryptexScript : MonoBehaviour
             symbolRowIndex[row]--;
         }
         updateCryptex();
+        checkIfCorrect(row);
+    }
+
+    public void checkIfCorrect(int row)
+    {
+        GameObject g;
+        Image i;
+        switch(row)
+        {
+            case 0:
+                g = symbolListRow1[symbolRowIndex[row]].gameObject;
+                i = g.GetComponent<Image>();
+                answer = i.sprite.name;
+                break;
+            case 1:
+                g = symbolListRow2[symbolRowIndex[row]].gameObject;
+                i = g.GetComponent<Image>();
+                answer = i.sprite.name;
+                break;
+            case 2:
+                g = symbolListRow3[symbolRowIndex[row]].gameObject;
+                i = g.GetComponent<Image>();
+                answer = i.sprite.name;
+                break;
+            case 3:
+                g = symbolListRow4[symbolRowIndex[row]].gameObject;
+                i = g.GetComponent<Image>();
+                answer = i.sprite.name;
+                break;
+            case 4:
+                g = symbolListRow5[symbolRowIndex[row]].gameObject;
+                i = g.GetComponent<Image>();
+                answer = i.sprite.name;
+                break;
+        }
+
+        if(activeGame == 0 && answer == codeList1[row].sprite.name) 
+        {
+            buttons1[row].SetActive(false);
+        }
+        else if (activeGame == 1 && answer == codeList2[row].sprite.name)
+        {
+            buttons2[row].SetActive(false);
+        }
+        if (activeGame == 0)
+        {
+            foreach (GameObject b in buttons1)
+            {
+                if (b.activeSelf)
+                {
+                    return;
+                }
+            }
+            win1();
+            activeGame++;
+            foreach (GameObject b in buttons1)
+            {
+                b.SetActive(true);
+            }
+        }
+        else if (activeGame == 1)
+        {
+            foreach (GameObject b in buttons2)
+            {
+                if (b.activeSelf)
+                {
+                    return;
+                }
+            }
+            win2();
+        }
     }
 
     public void updateCryptex()

@@ -21,6 +21,7 @@ public class BedManager : MonoBehaviour
     public GameObject blackScreen;
 
     private int chosenFate;
+    public LogsManager logmanager;
 
     public void checkIfAllowedBed()
     {
@@ -99,23 +100,25 @@ public class BedManager : MonoBehaviour
     public IEnumerator worty()
     {
         blackScreen.SetActive(true);
+        environment.SetActive(false);
         leave.Play();
-        yield return new WaitForSecondsRealtime(2f);
+        yield return new WaitForSecondsRealtime(6f);
         SceneManager.LoadScene("MainMenu");
     }
 
     public IEnumerator unsure()
     {
-        SceneManager.LoadScene("SampleScene");
-        yield return new WaitForSecondsRealtime(6f);
+        logmanager.vPlayers[0].enabled = true;
+        yield return new WaitForSecondsRealtime(8f);
         SceneManager.LoadScene("MainMenu");
     }
 
     public IEnumerator unworty()
     {
         blackScreen.SetActive(true);
+        environment.SetActive(false);
         die.Play();
-        yield return new WaitForSecondsRealtime(2f);
+        yield return new WaitForSecondsRealtime(11f);
         SceneManager.LoadScene("MainMenu");
     }
 
