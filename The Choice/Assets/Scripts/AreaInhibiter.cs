@@ -6,7 +6,7 @@ public class AreaInhibiter : MonoBehaviour
 {
     public int areaIndex;
 
-    public GameObject pillow;
+    public GameObject cryptex;
     public GameObject kastje1;
     public GameObject hallwayDoor;
     public GameObject showerDoor;
@@ -16,7 +16,7 @@ public class AreaInhibiter : MonoBehaviour
     private void Start()
     {
         areaIndex = 0;
-        pillow.SetActive(false);
+        cryptex.SetActive(false);
         kastje1.SetActive(false);
         hallwayDoor.SetActive(false);
         showerDoor.SetActive(false);
@@ -34,11 +34,11 @@ public class AreaInhibiter : MonoBehaviour
         switch (areaIndex) 
         {
             case 0:
-                //bedroom only, pillow & kastje1 not active
+                //bedroom only, cryptex & kastje1 not active
                 break;
             case 1:
-                //pillow active
-                pillow.SetActive(true);
+                //cryptex active
+                cryptex.SetActive(true);
                 break;
             case 2:
                 //+ hallway, shower not active

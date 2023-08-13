@@ -4,9 +4,18 @@ using UnityEngine;
 
 public class PuzzleManager : MonoBehaviour
 {
+    public AreaInhibiter areaInhibiter;
+    public VideoPlay videoPlay;
     public GameObject environment;
     public GameObject puzzle1;
     public GameObject puzzle2;
+
+    private bool openedArea;
+
+    private void Start()
+    {
+        openedArea = false;
+    }
 
     public void togglePuzzle1()
     {
@@ -31,6 +40,13 @@ public class PuzzleManager : MonoBehaviour
         else
         {
             environment.SetActive(true);
+        }
+
+        if(!openedArea)
+        {
+            areaInhibiter.areaIndex++;
+            videoPlay.unlockCertainVideo(4);
+            openedArea = true;
         }
     }
 }

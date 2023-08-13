@@ -106,7 +106,7 @@ public class MastermindMinigame : MonoBehaviour
         }
         foreach (string c in colourCode)
         {
-            Debug.Log(c);
+            //Debug.Log(c);
         }
         foreach (MasterRowScript m in Rows)
         {

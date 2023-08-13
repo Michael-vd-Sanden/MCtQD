@@ -33,6 +33,7 @@ public class VideoPlay : MonoBehaviour
     public GameObject arrows;
 
     private bool has1stTriggered;
+    private bool haslastTriggered;
 
     void Start()
     {
@@ -55,6 +56,11 @@ public class VideoPlay : MonoBehaviour
             { 
                 areaInhibiter.areaIndex++; 
                 has1stTriggered = true; 
+            }
+            if (hasSeenVideo[2] && !haslastTriggered)
+            {
+                areaInhibiter.areaIndex++;
+                haslastTriggered = true;
             }
         }
     }
