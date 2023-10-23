@@ -10,7 +10,9 @@ public class CryptexScript : MonoBehaviour
     public VideoPlay videoPlay;
     public AreaInhibiter areaInhibiter;
     public GameObject cryptex1;
+    public GameObject cryptexButton1;
     public GameObject cryptex2;
+    public GameObject cryptexButton2;
     public int activeGame;
 
     public bool complete1;
@@ -31,6 +33,8 @@ public class CryptexScript : MonoBehaviour
 
     private string answer;
 
+    public textScript textScript;
+
     public void start1()
     {
         if (!complete1)
@@ -44,12 +48,13 @@ public class CryptexScript : MonoBehaviour
     public void win1()
     {
         cryptex1.SetActive(false);
+        cryptexButton1.SetActive(false);
         complete1 = true;
         areaInhibiter.areaIndex++;
         videoPlay.knowsCode[1] = true;
         environment.SetActive(true);
         wholeGame.SetActive(false);
-        Debug.Log("win1");
+        textScript.StartCoroutine(textScript.displayText("Hey, a key and a colourcode. They must fit somewhere around here."));
     }
 
     public void start2()
@@ -65,10 +70,12 @@ public class CryptexScript : MonoBehaviour
     public void win2()
     {
         cryptex2.SetActive(false);
+        cryptexButton2.SetActive(false);
         complete2 = true;
         videoPlay.knowsCode[3] = true;
         environment.SetActive(true);
         wholeGame.SetActive(false);
+        textScript.StartCoroutine(textScript.displayText("Oh, a colour code."));
     }
 
 

@@ -12,7 +12,9 @@ public class WiresScript : MonoBehaviour
     public List<bool> hasWon;
 
     [SerializeField] private int wiresActive;
+    private bool progressed1;
     private bool progressed2;
+    private bool progressed3;
 
     public Button btnPressed;
     public AudioSource error;
@@ -20,6 +22,12 @@ public class WiresScript : MonoBehaviour
     public List<GameObject> completeWires1;
     public List<GameObject> completeWires2;
     public List<GameObject> completeWires3;
+
+    public GameObject wires1;
+    public GameObject wires2;
+    public GameObject wires3;
+
+    public textScript textScript;
 
     private void Start()
     {
@@ -48,19 +56,33 @@ public class WiresScript : MonoBehaviour
     {
         if (hasWon[0])
         {
-            videoPlay.unlockCertainVideo(5);
+            if (!progressed1)
+            {
+                videoPlay.unlockCertainVideo(5);
+                wires1.SetActive(false);
+                textScript.StartCoroutine(textScript.displayText("Oh, a colour code."));
+                progressed1 = true;
+            }
         }
         if (hasWon[1])
         {
             if(!progressed2)
             {
                 areaInhibiter.areaIndex++;
+                wires2.SetActive(false);
+                textScript.StartCoroutine(textScript.displayText("Hey, a key."));
                 progressed2 = true;
             }
         }
         if (hasWon[2])
         {
-            videoPlay.unlockCertainVideo(2);
+            if (!progressed3)
+            {
+                videoPlay.unlockCertainVideo(2);
+                wires3.SetActive(false);
+                textScript.StartCoroutine(textScript.displayText("Oh, a colour code."));
+                progressed3 = true;
+            }
         }
     }
 
